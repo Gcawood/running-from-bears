@@ -252,10 +252,11 @@
   .tc-throw { grid-column: 3; grid-row: 2; --c: var(--amber); }
   .tc-jump  { grid-column: 2; grid-row: 3; --c: var(--pine); }
 
-  /* small system buttons, top corners */
+  /* small system buttons: edge columns below the game's score row, so they
+     never cover the HUD; on wide phones they sit in the side gutters */
   .tc-sys {
-    position: fixed; z-index: 6; display: flex; gap: 2vmin;
-    top: calc(env(safe-area-inset-top, 0px) + 2vmin);
+    position: fixed; z-index: 6; display: flex; flex-direction: column; gap: 2vmin;
+    top: calc(env(safe-area-inset-top, 0px) + 16vh);
   }
   .tc-sys.left  { left:  calc(env(safe-area-inset-left, 0px) + 2vmin); }
   .tc-sys.right { right: calc(env(safe-area-inset-right, 0px) + 2vmin); }
@@ -290,7 +291,9 @@
   <div class="tc-sys left" id="tcSysLeft">
     <div class="tc-btn" data-key="p" data-code="KeyP" data-kc="80" aria-label="Pause">&#10074;&#10074;</div>
   </div>
+  <!-- menu lives on the right: the left thumb is busy with the joystick -->
   <div class="tc-sys right">
+    <div class="tc-btn" data-nav="index.html" aria-label="Back to game menu">&#9776;</div>
     <div class="tc-btn" id="tcMusic" data-key="n" data-code="KeyN" data-kc="78">&#9835; OFF</div>
   </div>
 </div>
@@ -362,6 +365,7 @@
     }
     b.addEventListener('pointerdown', function (e) {
       e.preventDefault();
+      if (b.dataset.nav) { location.href = b.dataset.nav; return; }
       if (held !== null) return;
       held = e.pointerId; b.classList.add('down');
       try { b.setPointerCapture(e.pointerId); } catch (_) {}
