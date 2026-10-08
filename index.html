@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐻</text></svg>">
+<title>RUNNING FROM BEARS — Playtest</title>
+<style>
+  :root {
+    --bg: #04080a; --pine: #6eeba5; --sky: #5ad2ff;
+    --amber: #ffc85a; --bear: #ff5550; --dim: #6d8a80;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+    color: var(--dim);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .menu { text-align: center; max-width: 640px; display: flex; flex-direction: column; gap: 28px; }
+  h1 {
+    color: var(--pine);
+    font-size: clamp(22px, 5vw, 40px);
+    letter-spacing: 0.14em;
+    text-shadow: 0 0 8px rgba(110,235,165,0.9), 0 0 28px rgba(110,235,165,0.45);
+  }
+  .sub { color: var(--sky); font-size: 13px; letter-spacing: 0.26em; }
+  .games { display: flex; flex-direction: column; gap: 16px; }
+  a.game {
+    display: block;
+    border: 1px solid rgba(110,235,165,0.5);
+    border-radius: 10px;
+    padding: 20px 24px;
+    color: var(--pine);
+    text-decoration: none;
+    font-size: 17px;
+    letter-spacing: 0.1em;
+    box-shadow: 0 0 24px rgba(110,235,165,0.12);
+  }
+  a.game small { display: block; margin-top: 8px; color: var(--dim); font-size: 12px; letter-spacing: 0.06em; }
+  a.game:hover, a.game:focus-visible { background: rgba(110,235,165,0.08); outline: none; }
+  a.game.flat { border-color: rgba(90,210,255,0.5); color: var(--sky); box-shadow: 0 0 24px rgba(90,210,255,0.12); }
+  .warn { color: var(--bear); font-size: 13px; letter-spacing: 0.18em; text-shadow: 0 0 14px rgba(255,85,80,0.5); }
+  .fine { font-size: 12px; line-height: 1.7; }
+</style>
+</head>
+<body>
+  <div class="menu">
+    <div>
+      <h1>RUNNING FROM BEARS</h1>
+      <p class="sub" style="margin-top:10px">PLAYTEST BUILDS &middot; LAKE ARROWHEAD</p>
+    </div>
+    <div class="games">
+      <a class="game" href="running_from_bears_wireframe.html">
+        &#9654; WIREFRAME EDITION (2.5-D)
+        <small>chase camera, perspective wireframes &mdash; the new one</small>
+      </a>
+      <a class="game flat" href="running_from_bears.html">
+        &#9654; CLASSIC FLAT EDITION
+        <small>top-down glowing vector art &mdash; the original</small>
+      </a>
+    </div>
+    <p class="warn">DO NOT APPROACH THE BABY BEARS. SERIOUSLY.</p>
+    <p class="fine">Plays on a computer (keyboard or game controller), or on a phone or
+    tablet held sideways with on-screen controls.<br>
+    Feedback wanted: bear speed, controls feel, and anything that made you laugh or rage.</p>
+  </div>
+</body>
+</html>
