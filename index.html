@@ -5,6 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐻</text></svg>">
 <title>RUNNING FROM BEARS — Playtest</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Bears">
+<meta name="theme-color" content="#04080a">
+<script>
+  if ('serviceWorker' in navigator && location.protocol === 'https:')
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+</script>
 <style>
   :root {
     --bg: #04080a; --pine: #6eeba5; --sky: #5ad2ff;
@@ -54,6 +65,7 @@
     .games { flex-direction: row; gap: 12px; }
     a.game { flex: 1; padding: 16px 14px; font-size: 15px; }
     .fine { display: none; }
+    .fine.install:not([hidden]) { display: block; }
   }
 </style>
 </head>
@@ -74,6 +86,18 @@
       </a>
     </div>
     <p class="warn">DO NOT APPROACH THE BABY BEARS. SERIOUSLY.</p>
+    <p class="fine install" id="installHint" hidden>On iPad or iPhone: tap <b>Share</b>
+    then <b>Add to Home Screen</b> to install it as an app that works offline.</p>
+    <script>
+      (function () {
+        var ios = /iP(hone|ad|od)/.test(navigator.userAgent) ||
+                  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        var installed = window.navigator.standalone ||
+                        (window.matchMedia && matchMedia('(display-mode: fullscreen), (display-mode: standalone)').matches);
+        var inApp = location.protocol !== 'https:';   // the TestFlight app's bundled copy
+        if (ios && !installed && !inApp) document.getElementById('installHint').hidden = false;
+      })();
+    </script>
     <p class="fine">Plays on a computer (keyboard or game controller), or on a phone or
     tablet held sideways with on-screen controls.<br>
     Feedback wanted: bear speed, controls feel, and anything that made you laugh or rage.</p>

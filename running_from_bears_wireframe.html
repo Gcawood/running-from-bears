@@ -1,5 +1,43 @@
 <!doctype html>
 <meta charset="utf-8">
+<!-- Home-screen web app (Share > Add to Home Screen): icon, full screen,
+     offline. Spliced into every page by build_web.sh. -->
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Bears">
+<meta name="theme-color" content="#04080a">
+<script>
+  // not available inside the iOS app's custom-scheme web view; that's fine
+  if ('serviceWorker' in navigator && location.protocol === 'https:')
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+
+  // iPhone/iPad audio: play through the silent switch, and wake the game's
+  // audio context on the first touch (iOS keeps web audio suspended until a
+  // gesture resumes it). Must run before the game creates its AudioContext.
+  (function () {
+    try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    var contexts = window.__rfbAudio = [];
+    var Tracked = function () {
+      var ctx = new (Function.prototype.bind.apply(AC, [null].concat([].slice.call(arguments))))();
+      contexts.push(ctx);
+      return ctx;
+    };
+    Tracked.prototype = AC.prototype;
+    window.AudioContext = Tracked;
+    if (window.webkitAudioContext) window.webkitAudioContext = Tracked;
+    function wake() {
+      contexts.forEach(function (c) { if (c.state !== 'running') c.resume().catch(function () {}); });
+    }
+    ['pointerdown', 'touchend', 'click', 'keydown'].forEach(function (t) {
+      window.addEventListener(t, wake, true);
+    });
+  })();
+</script>
 <title>RUNNING FROM BEARS — WIREFRAME</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐻</text></svg>">
